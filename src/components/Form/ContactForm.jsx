@@ -1,42 +1,53 @@
 import { useState } from 'react';
-
-const ContactForm = () => {
+import css from '../style.module.css';
+const ContactForm = ({ onSubmit }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
   const handleChangeName = e => {
     setName(e.target.value);
   };
+
   const handleChangeNumber = e => {
     setNumber(e.target.value);
   };
+
+  const handleFormSubmit = e => {
+    e.preventDefault();
+    onSubmit({ name, number });
+    setName('');
+    setNumber('');
+  };
+
   return (
     <div>
-      <h1> Phonebook </h1>
-      <form>
-        <p>Name</p>
-        <input
-          type="text"
-          name="name"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          value={name}
-          onChange={handleChangeName}
-          required
-        />
-        <p>Phone</p>
-        <input
-          type="tel"
-          name="number"
-          pattern="\+?\d{1,4}?[\-.\s]?\(?\d{1,3}?\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          value={number}
-          onChange={handleChangeNumber}
-          required
-        />
-
+      <form onSubmit={handleFormSubmit}>
         <div>
-          {' '}
-          <button type="submit">Add contacts</button>
+          <label>
+            <p>Name :</p>
+            <input
+              type="text"
+              value={name}
+              onChange={handleChangeName}
+              required
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            <p>Number:</p>
+            <input
+              type="text"
+              value={number}
+              onChange={handleChangeNumber}
+              required
+            />
+          </label>
+        </div>
+        <div>
+          <button className={css.add} type="submit">
+            Add Contact
+          </button>
         </div>
       </form>
     </div>
